@@ -1,0 +1,13 @@
+{
+  "name": "volt-shop",
+  "version": "1.0.0",
+  "description": "Навчальний інтернет-магазин аксесуарів на HTML, CSS і JavaScript",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes serve -l 8080 .",
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "node tests/e2e.mjs"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Вольт — інтернет-магазин аксесуарів для смартфонів і комп'ютерів: навушники, зарядні пристрої, павербанки, миші, клавіатури, колонки.">
+  <title>Вольт — інтернет-магазин аксесуарів</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/catalog.css">
+  <link rel="stylesheet" href="css/filters.css">
+  <link rel="stylesheet" href="css/cart.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="./"><img src="img/favicon.svg" alt="" width="32" height="32"> Вольт</a>
+      <label class="search">
+        <span class="visually-hidden">Пошук товарів</span>
+        <input id="search" type="search" placeholder="Пошук товарів…" autocomplete="off">
+      </label>
+      <button id="cart-toggle" class="cart-toggle" type="button" aria-controls="cart" aria-expanded="false" aria-label="Кошик">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM5.2 4l.4 2H20l-1.8 8H8.1l-.3 1H19v2H5.4l1.2-4.2L4.4 2H2V0h4.1l.5 2H5.2Z"/></svg>
+        <span class="cart-toggle__label">Кошик</span>
+        <span id="cart-count" class="cart-toggle__count" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <aside id="filters" class="filters" aria-label="Фільтри">
+      <div class="filters__head">
+        <h2 class="filters__title">Фільтри</h2>
+        <button id="filters-close" class="icon-button filters__close" type="button" aria-label="Закрити фільтри">✕</button>
+      </div>
+      <fieldset class="filters__group">
+        <legend>Категорія</legend>
+        <div id="filter-categories"></div>
+      </fieldset>
+      <fieldset class="filters__group">
+        <legend>Ціна, грн</legend>
+        <div class="price-range">
+          <input id="price-min" type="number" min="0" step="50" inputmode="numeric" aria-label="Мінімальна ціна">
+          <span aria-hidden="true">—</span>
+          <input id="price-max" type="number" min="0" step="50" inputmode="numeric" aria-label="Максимальна ціна">
+        </div>
+      </fieldset>
+      <fieldset class="filters__group">
+        <legend>Бренд</legend>
+        <div id="filter-brands"></div>
+      </fieldset>
+      <label class="check"><input id="in-stock" type="checkbox"> <span>Лише в наявності</span></label>
+      <button id="reset-filters" class="btn btn--ghost" type="button">Скинути фільтри</button>
+    </aside>
+
+    <section class="catalog" aria-labelledby="catalog-title">
+      <div class="catalog__toolbar">
+        <h1 id="catalog-title" class="catalog__title">Каталог товарів</h1>
+        <p id="result-count" class="catalog__count" aria-live="polite"></p>
+        <div class="catalog__controls">
+          <button id="filters-toggle" class="btn btn--ghost filters-toggle" type="button" aria-controls="filters" aria-expanded="false">Фільтри</button>
+          <label class="sort">
+            <span>Сортування:</span>
+            <select id="sort" aria-label="Сортування товарів">
+              <option value="popular">за рейтингом</option>
+              <option value="price-asc">від дешевших</option>
+              <option value="price-desc">від дорожчих</option>
+              <option value="name">за назвою</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div id="catalog-grid" class="grid"></div>
+    </section>
+  </main>
+
+  <aside id="cart" class="cart" aria-label="Кошик">
+    <div class="cart__head">
+      <h2 class="cart__title">Кошик</h2>
+      <button id="cart-close" class="icon-button" type="button" aria-label="Закрити кошик">✕</button>
+    </div>
+    <ul id="cart-items" class="cart__items"></ul>
+    <div class="cart__summary">
+      <p class="cart__total">Разом: <b id="cart-total">0 ₴</b></p>
+      <button id="cart-clear" class="btn btn--ghost" type="button">Очистити кошик</button>
+    </div>
+    <section id="checkout" class="checkout" hidden>
+      <h3 class="checkout__title">Оформлення замовлення</h3>
+      <form id="checkout-form" novalidate>
+        <label class="field">Ім'я
+          <input name="name" type="text" required minlength="2" autocomplete="name">
+        </label>
+        <label class="field">Телефон
+          <input name="phone" type="tel" required pattern="\+?380\d{9}" placeholder="+380XXXXXXXXX" autocomplete="tel">
+        </label>
+        <button class="btn btn--primary btn--wide" type="submit">Оформити замовлення</button>
+      </form>
+    </section>
+    <p id="checkout-message" class="checkout__message" role="status"></p>
+  </aside>
+
+  <div id="overlay" class="overlay" hidden></div>
+
+  <dialog id="product-dialog" class="dialog" aria-labelledby="details-title">
+    <button class="icon-button dialog__close" type="button" data-action="close" aria-label="Закрити">✕</button>
+    <div id="product-dialog-body"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer class="footer">
+    <div class="container">© 2026 Вольт. Навчальний проєкт: каталог і ціни не є публічною офертою.</div>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

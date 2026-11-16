@@ -1,0 +1,16 @@
+# Налаштування публікації на Netlify.
+# Сайт статичний, тому збирання не потрібне: публікується корінь репозиторію.
+[build]
+  publish = "."
+  command = "npm test"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
